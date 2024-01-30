@@ -6,8 +6,8 @@ WORKDIR /app
 COPY . /app
 
 RUN rm -rf yarn.lock package-lock.json node_modules
-RUN npm install 
-RUN npm build 
+RUN sudo npm install 
+RUN sudo npm build 
 
 FROM nginx:1.19.0
 WORKDIR /usr/share/nginx/html
