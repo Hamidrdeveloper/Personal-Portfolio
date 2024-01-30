@@ -34,16 +34,16 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker
-        uses: docker/setup-docker-action@v2
+        uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
-        run: docker build -t my-docker-registry/my-react-app .
+        run: docker build -t hamidrdeveloper/personal-portfolio .
 
       - name: Push Docker image
         run: >
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} &&
-          docker push my-docker-registry/my-react-app
+          docker push hamidrdeveloper/personal-portfolio
 
       - name: Deploy to the server (adjust this step based on your deployment method)
         run: |
-          ssh your-server-user@your-server-ip "docker pull my-docker-registry/my-react-app:latest && docker-compose up -d"
+          ssh your-server-user@your-server-ip "docker pull hamidrdeveloper/personal-portfolio:latest && docker-compose up -d"
