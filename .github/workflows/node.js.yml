@@ -20,7 +20,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t hamidrdeveloper/personal-portfolio .
+        docker build -t vegahr/personal-portfolio:tagname .
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push vegahr/personal-portfolio:tagname
 
