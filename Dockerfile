@@ -1,18 +1,20 @@
-FROM node:17-alpine as builder
+# Use an official Node runtime as a parent image
+FROM node:17
 
-RUN mkdir /app
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-COPY . /app
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-RUN rm -rf yarn.lock package-lock.json node_modules
-RUN sudo npm install 
-RUN sudo npm build 
+# Install app dependencies
+RUN npm install
 
-FROM nginx:1.19.0
-WORKDIR /usr/share/nginx/html
-RUN rm -rf ./*
-COPY --from=builder /app/build .
-COPY --from=builder /app/build build
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-#CMD ["yarn", "start"]
+# Bundle app source
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run your app
+CMD ["npm", "start"]
