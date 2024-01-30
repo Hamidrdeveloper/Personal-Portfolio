@@ -29,7 +29,18 @@ import Toolkit from "./components/aboutme/skills/Toolkit";
 
 function App() {
   const [load, updateLoad] = useState(true);
+onst express = require('express');
+const app = express();
+const port = 80; // Use port 80
 
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Start the server on port 80 with elevated privileges (may require sudo)
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
   useEffect(() => {
     const timer = setTimeout(() => {
       updateLoad(false);
