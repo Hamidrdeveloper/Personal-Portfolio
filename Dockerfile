@@ -1,11 +1,28 @@
-# Use an official Node runtime as a parent image
-FROM node:14
+# Stage 1: Build the Node.js application
+FROM node:14 as builder
 
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
 # Install app dependencies
 RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
 RUN npm run build
+
+# Stage 2: Use Nginx to serve the built artifacts
 FROM nginx:alpine
-COPY /build /usr/share/nginx/html
+
+# Copy the built artifacts from the builder stage to the nginx directory
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# CMD is not needed as nginx image's default CMD is to start nginx
