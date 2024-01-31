@@ -1,15 +1,11 @@
 # Use an official Node runtime as a parent image
-FROM node:17-alpine as build
+FROM node:14
 
-# Set the working directory
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install --force
-
-
-
-# Build the React app
-RUN npm run build
-
-
+# Install app dependencies
+RUN npm install
