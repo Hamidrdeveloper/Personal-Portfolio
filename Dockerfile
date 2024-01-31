@@ -1,14 +1,12 @@
 # Stage 1: Build the Node.js application
-FROM node:14 as builder
-
+FROM node:14-slim
 # Set the working directory
-WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN npm install --force
 
 # Copy the rest of the application code
 COPY . .
